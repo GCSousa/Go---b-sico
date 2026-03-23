@@ -1,0 +1,26 @@
+title: "Guia de Go (Golang)"
+description: "Guia introdutório de Go — do zero até funções, arrays e laços."
+theme: just-the-docs
+
+# URL do seu GitHub Pages (ajuste com seu usuário e repositório)
+url: "https://GCSousa.github.io"
+baseurl: "/Go---b-sico"
+
+# Habilita busca
+search_enabled: true
+
+# Sidebar
+nav_sort: order
+
+# Realce de sintaxe
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+
+# Rodapé
+footer_content: "Guia de Go &mdash; Conteúdo educacional"
+
+# Plugins padrão do GitHub Pages
+plugins:
+  - jekyll-seo-tag

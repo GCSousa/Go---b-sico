@@ -1,0 +1,237 @@
+<body>
+  <div id="root"><div class="app-wrapper"><header><div class="container"><nav><a class="logo" href="/pensamento-computacional" data-discover="true">Pensamento Computacional - INF UFRGS</a><ul class="nav-links"><li><a class="" href="/pensamento-computacional" data-discover="true">Início</a></li><li class="dropdown"><a aria-current="page" class="active" href="/pensamento-computacional/topics" data-discover="true">Tópicos <span style="font-size: 0.7em;">▼</span></a><ul class="dropdown-content"><li><a href="/pensamento-computacional/topics/learning" data-discover="true">Aprendendo a Programar</a></li><li><a href="/pensamento-computacional/topics/style-guide" data-discover="true">Guia de Estilo</a></li><li><a href="/pensamento-computacional/topics/tipos-de-dados" data-discover="true">Tipos de Dados</a></li><li><a href="/pensamento-computacional/topics/functions" data-discover="true">Funções</a></li></ul></li><li><a class="" href="/pensamento-computacional/labs" data-discover="true">Laboratórios</a></li><li><a class="" href="/pensamento-computacional/exercises" data-discover="true">Exercícios</a></li><li><a class="" href="/pensamento-computacional/examples" data-discover="true">Exemplos</a></li></ul></nav></div></header><main class="container main-content"><div class="page-container"><div class="page-content"><a class="back-link" href="/pensamento-computacional/topics" data-discover="true" style="display: inline-block; margin-bottom: 1rem; text-decoration: none; color: rgb(102, 102, 102);">← Voltar para Tópicos</a><div class="section"><h1>Guia de Estilo Pyret (Testes, Design e Clareza)</h1>
+<p>Adaptado de <a href="https://cs111-docs.cs.brown.edu/s/pyret-guide">Pyret Style Guide - Brown University</a>.</p>
+<hr>
+<h2 id="exemplos-testes-automatizados">Exemplos (Testes Automatizados)</h2>
+<ol>
+<li>
+<p><strong>Todas as funções, incluindo funções auxiliares, requerem exemplos</strong> (exceto funções que retornam imagens). Eles servem como uma forma de documentação. Exemplos são escritos em blocos <strong>where</strong>.</p>
+</li>
+<li>
+<p>Exemplos devem ser escritos <strong>antes</strong> de você começar a escrever sua função. Escrever bons exemplos ajuda você a entender como sua função deve se comportar com diferentes entradas.</p>
+</li>
+<li>
+<p>Exemplos devem ilustrar variações interessantes nas entradas ou no comportamento da função. Você não precisa testar todas as combinações (o que seria impossível!), mas deve cobrir diferentes cenários.</p>
+</li>
+</ol>
+<hr>
+<h2 id="diretrizes-para-desenvolver-exemplos">Diretrizes para desenvolver exemplos</h2>
+<h3 id="cubra-casos-extremos-edge-cases">Cubra Casos Extremos (Edge Cases)</h3>
+<p>Casos extremos são entradas nos limites do espaço de entradas. Por exemplo, para uma função que testa "números entre 4 e 8", os limites são importantes. Outros limites comuns são strings vazias, zero, ou listas vazias.</p>
+<h3 id="exemplo-prático">Exemplo Prático</h3>
+<p>Como exemplo, considere uma função <strong>compare</strong> que recebe dois números <strong>x</strong> e <strong>y</strong> e retorna uma string. Ela deve retornar <strong>"muito menor"</strong> se <strong>x</strong> for menor que <strong>y - 2</strong>, <strong>"quase igual"</strong> se <strong>x</strong> estiver entre <strong>y - 2</strong> e <strong>y + 2</strong> (inclusive) e <strong>"muito maior"</strong> se <strong>x</strong> for maior que <strong>y + 2</strong>. Aqui está um conjunto de bons exemplos para esta função:</p>
+<pre><div class="pyret-embed-container" style="height: 521px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed98499" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<p>Note que esses exemplos cobrem cada "caso" relevante do programa. Eles também incluem casos extremos testando os limites - por exemplo, <strong>compare(8, 10)</strong> é um caso extremo, pois está no limite entre os casos "muito menor" e "quase igual".</p>
+<hr>
+<h2 id="design">Design</h2>
+<ol>
+<li><strong>Use constantes</strong> para capturar relacionamentos entre valores. Evite "números mágicos" espalhados pelo código.</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 281px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed403866" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<ol start="2">
+<li><strong>Use funções auxiliares</strong> para evitar repetição de código. Se você tem uma expressão que aparece várias vezes com pequenas alterações, crie uma função. Por exemplo:</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 209px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed406725" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<p>Pode ser escrito como:</p>
+<pre><div class="pyret-embed-container" style="height: 329px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed41879" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<hr>
+<h2 id="clareza">Clareza</h2>
+<ol>
+<li><strong>Escreva docstrings</strong> para todas as funções. Uma boa docstring descreve o que a função faz, suas entradas e saídas. Idealmente, olhando para a docstring você sabe o que a função faz e como usá-la sem precisar olhar para o corpo da função.</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 209px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed404979" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<ol start="2">
+<li><strong>Dê nomes úteis</strong> para constantes e funções.</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 449px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed977169" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<ol start="3">
+<li>
+<p><strong>Todas as funções requerem anotações de tipo</strong> nas entradas e na saída.</p>
+</li>
+<li>
+<p>Nomes de constantes e funções devem ser em minúsculas e separados por hífens (<strong>kebab-case</strong>).</p>
+</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 281px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed651230" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<ol start="5">
+<li><strong>Mantenha as linhas abaixo de 80 caracteres</strong>. Se a linha for muito longa, quebre-a. Docstrings muito grandes podem ser escritas usando aspas triplas (<pre><code>```</code></pre>):</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 185px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed350003" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre>
+<ol start="6">
+<li><strong>Indente seu código corretamente</strong>. Use <strong>Ctrl-A</strong> (ou <strong>Cmd-A</strong>) e <strong>Tab</strong> para auto-indentar no editor web.</li>
+</ol>
+<pre><div class="pyret-embed-container" style="height: 425px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; overflow: auto; resize: vertical; background-color: rgb(245, 245, 245); margin-bottom: 1rem;"><iframe srcdoc="
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+html, body { height: 100%; }
+body { margin: 0; padding: 0; }
+&lt;/style&gt;
+&lt;script&gt;
+window.addEventListener('message', (e) =&gt; {
+  if (e.source === window.parent) {
+    const iframes = document.getElementsByTagName(&quot;iframe&quot;);
+    iframes[0].contentWindow.postMessage(e.data, &quot;*&quot;);
+  }
+  else {
+    window.parent.postMessage(e.data, &quot;*&quot;);
+  }
+});
+&lt;/script&gt;
+&lt;body&gt;&lt;/body&gt;
+&lt;/html&gt;" id="pyret-embed509720" style="width: 100%; height: 100%; border: 0px; display: block;"></iframe></div></pre></div></div><aside class="toc-sidebar"><h4 class="toc-title">Nesta Página</h4><nav class="toc-nav"><ul><li class="toc-level-2"><a href="#exemplos-testes-automatizados">Exemplos (Testes Automatizados)</a></li><li class="toc-level-2"><a href="#diretrizes-para-desenvolver-exemplos">Diretrizes para desenvolver exemplos</a></li><li class="toc-level-3"><a href="#cubra-casos-extremos-edge-cases">Cubra Casos Extremos (Edge Cases)</a></li><li class="toc-level-3"><a href="#exemplo-prático">Exemplo Prático</a></li><li class="toc-level-2"><a href="#design">Design</a></li><li class="toc-level-2"><a href="#clareza">Clareza</a></li></ul></nav></aside></div></main><footer><div class="container" style="display: flex; flex-direction: column; align-items: center;"><div style="background-color: rgb(255, 255, 255); padding: 0.5rem 1rem; border-radius: 8px; margin-bottom: 1rem; display: inline-block;"><img alt="Logo Instituto de Informática UFRGS" src="/pensamento-computacional/inf-logo-2.0.svg" style="height: 50px; display: block;"></div><p>© 2026 INF05008 - Pensamento Computacional<br>Instituto de Informática - UFRGS<br>Departamento de Informática Teórica<br>Prof. Lucas Nunes Alegre - <a href="https://lucasalegre.github.io">lucasalegre.github.io</a></p></div></footer></div></div>
+
+
+</body>
